@@ -1,1 +1,1 @@
-export * as screenRoutes from './screenroutes';
+export * as screenRoutes from "./screenroutes";
