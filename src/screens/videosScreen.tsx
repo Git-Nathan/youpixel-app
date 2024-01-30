@@ -1,15 +1,12 @@
 import {observer} from 'mobx-react-lite';
 import {useEffect, useLayoutEffect, useState} from 'react';
+import {FlatList} from 'react-native';
 import {VideoCardSkeleton} from '../components/skeleton/videoCard';
-import {VideoCard} from '../components/videoCard';
-import {VideosStore} from '../stores/videos';
+import {VideoCard} from '../components/videoList/videoCard';
+import {mainStackVideosStore} from '../stacks/mainStack';
 
-const videosStoreIntance = new VideosStore();
-
-export interface IVideosScreen {}
-
-function VideosScreen(props: IVideosScreen) {
-  const [store] = useState(() => videosStoreIntance);
+export const VideosScreen = observer(() => {
+  const [store] = useState(() => mainStackVideosStore);
 
   useLayoutEffect(() => {
     store.setIsLoading(true);
@@ -25,9 +22,15 @@ function VideosScreen(props: IVideosScreen) {
     ));
   }
 
-  return store.videoList.map((video, index) => (
-    <VideoCard key={index} video={video} />
-  ));
-}
-
-export default observer(VideosScreen);
+  return (
+    <FlatList
+      data={store.videoList}
+      renderItem={({item}) => <VideoCard video={item} />}
+      keyExtractor={item => item._id}
+      refreshing={store.isLoading}
+      onRefresh={() => {
+        store.getVideoList();
+      }}
+    />
+  );
+});

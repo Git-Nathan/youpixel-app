@@ -19,3 +19,9 @@ export interface IUserInfo {
   role: string;
   picture: string;
 }
+
+export interface IIcon {
+  width?: string;
+  height?: string;
+  className?: string;
+}

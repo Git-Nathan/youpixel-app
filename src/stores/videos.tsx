@@ -1,5 +1,5 @@
-import axios from 'axios';
 import {makeAutoObservable} from 'mobx';
+import {api} from '../axios';
 import {IVideo} from '../interface';
 
 export class VideosStore {
@@ -7,13 +7,31 @@ export class VideosStore {
     makeAutoObservable(this);
   }
 
-  // Video list
+  // Loading
   isLoading = false;
 
   setIsLoading(isLoading: boolean) {
     this.isLoading = isLoading;
   }
 
+  // Search
+  searchQuery = '';
+
+  setSearchQuery(query: string) {
+    this.searchQuery = query;
+  }
+
+  openSearchBar = false;
+
+  handleOpenSearchBar() {
+    this.openSearchBar = true;
+  }
+
+  handleCloseSearchBar() {
+    this.openSearchBar = false;
+  }
+
+  // Video list
   videoList: IVideo[] = [];
 
   setVideoList(videoList: IVideo[]): void {
@@ -23,7 +41,7 @@ export class VideosStore {
   async getVideoList() {
     this.setIsLoading(true);
     try {
-      const res = await axios.get('https://youpixel-api.onrender.com/videos');
+      const res = await api.video.getVideos();
 
       this.setVideoList(res.data.data);
     } catch (error) {
