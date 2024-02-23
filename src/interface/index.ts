@@ -25,3 +25,9 @@ export interface IIcon {
   height?: string;
   className?: string;
 }
+
+export interface ISigninData {
+  name: string;
+  email: string;
+  picture: string;
+}
