@@ -32,7 +32,7 @@ export function VideoCard(props: IVideoCardProps) {
           }}
         />
         <View className="flex w-full pl-3 pr-12">
-          <Text numberOfLines={2} className=" font-bold text-white">
+          <Text numberOfLines={2} className="font-bold text-white">
             {props.video.title}
           </Text>
           <Text numberOfLines={1} className="mt-[2px] text-[12px] text-[#aaa]">
