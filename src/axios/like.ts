@@ -1,6 +1,10 @@
 import {axiosIntance} from '.';
 
 export class LikeApi {
+  getNumberOfLikes(videoId: string) {
+    return axiosIntance.get(`/like/num/${videoId}`);
+  }
+
   getLikeStatus(videoId: string) {
     return axiosIntance.get(`/like/status/${videoId}`);
   }

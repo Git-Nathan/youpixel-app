@@ -29,16 +29,19 @@ export const Channel = observer(() => {
         <Image
           className="h-9 w-9 rounded-full"
           source={{
-            uri: watchStore.channel.picture,
+            uri: watchStore.channel?.picture || '',
           }}
         />
         <Text className="text-sm font-bold text-white">
-          {watchStore.channel.name}
+          {watchStore.channel?.name || ''}
         </Text>
         <Text className="text-sm text-[#aaa]">
-          {watchStore.channel.numOfSubscriber}
+          {watchStore.channel?.numOfSubscriber || ''}
         </Text>
       </View>
+      <TouchableOpacity className="flex h-8 flex-row items-center rounded-full bg-white px-3">
+        <Text className="text-xs font-bold text-black">Subscribe</Text>
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 });

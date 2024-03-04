@@ -50,6 +50,11 @@ export interface IWatchVideo {
   comment: Comment;
 }
 
+export interface INumberOfLikes {
+  liked: number;
+  disliked: number;
+}
+
 export interface Comment {
   _id: string;
   userId: string;
@@ -67,4 +72,21 @@ export interface IChannel {
   createdAt: Date;
   updatedAt: Date;
   numOfSubscriber: number;
+}
+
+export interface ICommentsResponse {
+  data: IComment[];
+  numberOfPages: number;
+  total: number;
+}
+
+export interface IComment {
+  _id: string;
+  userId: string;
+  videoId: string;
+  desc: string;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  userInfo: IUserInfo;
 }
