@@ -4,13 +4,13 @@ import {useState} from 'react';
 import {Image, View} from 'react-native';
 import SearchIcon from '../../assets/icons/search.svg';
 import VideoIcon from '../../assets/icons/video.svg';
-import {mainStackVideosStore} from '../../stacks/mainStack';
+import {videosStore} from '../../screens/videosScreen';
 import {SearchBar} from './searchBar';
 
 export interface IHeaderProps {}
 
 export const Header = observer((props: IHeaderProps) => {
-  const [store] = useState(() => mainStackVideosStore);
+  const [store] = useState(() => videosStore);
 
   if (store.openSearchBar) {
     return <SearchBar />;

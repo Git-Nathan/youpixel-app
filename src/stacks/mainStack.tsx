@@ -6,12 +6,10 @@ import TrendingIcon from '../assets/icons/trending.svg';
 import UserIcon from '../assets/icons/user-octagon.svg';
 import {Header} from '../components/header/header';
 import {VideosScreen} from '../screens/videosScreen';
-import {VideosStore} from '../stores/videos';
 import {globalStyles} from '../styles/globalStyles';
+import {VideosStack} from './videosStack';
 
 const Tab = createBottomTabNavigator();
-
-export const mainStackVideosStore = new VideosStore();
 
 export interface IMainStackProps {}
 
@@ -30,7 +28,7 @@ export function MainStack(props: IMainStackProps) {
       }}>
       <Tab.Screen
         name="home"
-        component={VideosScreen}
+        component={VideosStack}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({focused}) => {

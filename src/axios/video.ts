@@ -12,7 +12,7 @@ export class VideoApi {
 
   getVideosTrending(page: number) {
     return axiosIntance.get(
-      `/videos/topview` +
+      `/videos/topview?` +
         new URLSearchParams({
           page: page.toString(),
         }),
@@ -21,7 +21,7 @@ export class VideoApi {
 
   getUserVideo(id: string, page: number) {
     return axiosIntance.get(
-      `/videos/author` +
+      `/videos/author?` +
         new URLSearchParams({
           page: page.toString(),
           id,
@@ -31,7 +31,7 @@ export class VideoApi {
 
   getUserVideoPending(id: string, page: number) {
     return axiosIntance.get(
-      `/videos/author/pending` +
+      `/videos/author/pending?` +
         new URLSearchParams({
           page: page.toString(),
           id,

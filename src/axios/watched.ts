@@ -3,7 +3,7 @@ import {axiosIntance} from '.';
 export class WatchedApi {
   getWatchedVideos(page: number) {
     return axiosIntance.get(
-      `/videos/watched` +
+      `/videos/watched?` +
         new URLSearchParams({
           page: page.toString(),
         }),

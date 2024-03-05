@@ -4,6 +4,7 @@ import {
   IChannel,
   ICommentsResponse,
   INumberOfLikes,
+  IVideo,
   IWatchVideo,
 } from '../interface';
 
@@ -35,7 +36,7 @@ export class WatchStore {
       const res = await api.video.getVideo(videoId);
 
       // Get using ChannelId
-      this.getChannel(res.data.data.userInfo._id);
+      this.getChannel(res.data.data.userId as string);
 
       this.setVideo(res.data.data);
     } catch (error) {
@@ -108,9 +109,9 @@ export class WatchStore {
     this.commentLoading = commentLoading;
   }
 
-  comment: ICommentsResponse[] = [];
+  comment: ICommentsResponse = {} as ICommentsResponse;
 
-  setComment(comment: ICommentsResponse[]) {
+  setComment(comment: ICommentsResponse) {
     this.comment = comment;
   }
 
@@ -118,11 +119,39 @@ export class WatchStore {
     try {
       const res = await api.comment.getComments(videoId, page);
 
-      this.setComment = res.data;
+      this.setComment(res.data);
     } catch (error) {
       console.log('error', error);
     } finally {
       this.setCommentLoading(false);
+    }
+  }
+
+  // Related videos
+
+  relatedLoading: boolean = true;
+
+  setRelatedLoading(relatedLoading: boolean) {
+    this.relatedLoading = relatedLoading;
+  }
+
+  // Video list
+  videoList: IVideo[] = [];
+
+  setVideoList(videoList: IVideo[]): void {
+    this.videoList = videoList;
+  }
+
+  async getVideoList() {
+    this.setIsLoading(true);
+    try {
+      const res = await api.video.getVideos();
+
+      this.setVideoList(res.data.data);
+    } catch (error) {
+      console.log('error', error);
+    } finally {
+      this.setRelatedLoading(false);
     }
   }
 }

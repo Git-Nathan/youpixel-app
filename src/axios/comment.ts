@@ -3,7 +3,7 @@ import {axiosIntance} from '.';
 export class CommentApi {
   getComments(videoId: string, page: number) {
     return axiosIntance.get(
-      `/comment/${videoId}` +
+      `/comment/${videoId}?` +
         new URLSearchParams({
           page: page.toString(),
         }),

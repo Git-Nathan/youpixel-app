@@ -122,7 +122,7 @@ export const VideoPlayer = observer(() => {
             </View>
             <View className="absolute bottom-0 flex w-full flex-row items-center justify-between px-5">
               <Text className="text-white">
-                {videoTimeFormat(progress.currentTime.toFixed(0))}
+                {videoTimeFormat(progress.currentTime?.toFixed(0))}
               </Text>
               <Slider
                 style={{
@@ -141,7 +141,7 @@ export const VideoPlayer = observer(() => {
                 }}
               />
               <Text className="text-white">
-                {videoTimeFormat(progress.seekableDuration.toFixed(0))}
+                {videoTimeFormat(progress.seekableDuration?.toFixed(0))}
               </Text>
             </View>
             <TouchableOpacity

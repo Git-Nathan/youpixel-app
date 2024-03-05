@@ -3,10 +3,12 @@ import {useEffect, useLayoutEffect, useState} from 'react';
 import {FlatList} from 'react-native';
 import {VideoCardSkeleton} from '../components/skeleton/videoCard';
 import {VideoCard} from '../components/videoList/videoCard';
-import {mainStackVideosStore} from '../stacks/mainStack';
+import {VideosStore} from '../stores/videos';
+
+export const videosStore = new VideosStore();
 
 export const VideosScreen = observer(() => {
-  const [store] = useState(() => mainStackVideosStore);
+  const [store] = useState(() => videosStore);
 
   useLayoutEffect(() => {
     store.setIsLoading(true);

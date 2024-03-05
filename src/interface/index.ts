@@ -46,8 +46,7 @@ export interface IWatchVideo {
   status: string;
   createdAt: Date;
   updatedAt: Date;
-  userInfo: IUserInfo;
-  comment: Comment;
+  __v: number;
 }
 
 export interface INumberOfLikes {
@@ -89,4 +88,12 @@ export interface IComment {
   updatedAt: Date;
   __v: number;
   userInfo: IUserInfo;
+}
+
+export interface IRelatedSearch {
+  _id: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
 }

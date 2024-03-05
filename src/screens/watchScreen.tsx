@@ -3,10 +3,11 @@ import {Skeleton} from '@rneui/base';
 import {observer} from 'mobx-react-lite';
 import moment from 'moment';
 import {useEffect, useState} from 'react';
-import {Text, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import ShareIcon from '../assets/icons/share.svg';
 import {VideoCardSkeleton} from '../components/skeleton/videoCard';
+import {VideoCard} from '../components/videoList/videoCard';
 import {Channel} from '../components/watch/channel';
 import {Like} from '../components/watch/like';
 import {PreviewComment} from '../components/watch/previewComment';
@@ -28,6 +29,10 @@ export const WatchScreen = observer(() => {
 
   useEffect(() => {
     watchStore.getDetail(videoId);
+  }, []);
+
+  useEffect(() => {
+    watchStore.getVideoList();
   }, []);
 
   if (watchStore.isLoading)
@@ -63,43 +68,48 @@ export const WatchScreen = observer(() => {
   return (
     <>
       <VideoPlayer />
-      <View className="p-3">
-        <TouchableOpacity onPress={handleShowDesc}>
-          <Text
-            className="w-full text-base font-bold text-white"
-            numberOfLines={2}>
-            {watchStore.video.title}
-          </Text>
-          <View className="mt-1 flex flex-row gap-x-2">
-            <Text className="text-[12px] text-[#aaa]">
-              {watchStore.video.views} views
-              <Text className="text-[#f05123]"> • </Text>
-              {moment(watchStore.video.createdAt).fromNow()}
+      <ScrollView>
+        <View className="mb-3 p-3">
+          <TouchableOpacity onPress={handleShowDesc}>
+            <Text
+              className="w-full text-base font-bold text-white"
+              numberOfLines={2}>
+              {watchStore.video.title}
             </Text>
-            <Text className="text-xs text-white">...more</Text>
-          </View>
-        </TouchableOpacity>
+            <View className="mt-1 flex flex-row gap-x-2">
+              <Text className="text-[12px] text-[#aaa]">
+                {watchStore.video.views} views
+                <Text className="text-[#f05123]"> • </Text>
+                {moment(watchStore.video.createdAt).fromNow()}
+              </Text>
+              <Text className="text-xs text-white">...more</Text>
+            </View>
+          </TouchableOpacity>
 
-        <Channel />
+          <Channel />
 
-        <View className="mt-3 flex flex-row items-center space-x-3">
-          <Like videoId={videoId} />
-          <View
-            className="flex flex-row rounded-full"
-            style={{
-              backgroundColor: '#1e232e',
-            }}>
-            <TouchableOpacity
-              className="flex h-8 flex-row items-center px-3"
-              onPress={handleShare}>
-              <ShareIcon color="white" width={18} height={18} />
-              <Text className="ml-2 text-white">Share</Text>
-            </TouchableOpacity>
+          <View className="mt-3 flex flex-row items-center space-x-3">
+            <Like videoId={videoId} />
+            <View
+              className="flex flex-row rounded-full"
+              style={{
+                backgroundColor: '#1e232e',
+              }}>
+              <TouchableOpacity
+                className="flex h-8 flex-row items-center px-3"
+                onPress={handleShare}>
+                <ShareIcon color="white" width={18} height={18} />
+                <Text className="ml-2 text-white">Share</Text>
+              </TouchableOpacity>
+            </View>
           </View>
+
+          <PreviewComment videoId={videoId} />
         </View>
-
-        <PreviewComment videoId={videoId} />
-      </View>
+        {watchStore.videoList.map((item, index) => (
+          <VideoCard key={index} video={item} />
+        ))}
+      </ScrollView>
     </>
   );
 });

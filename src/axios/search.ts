@@ -3,7 +3,7 @@ import {axiosIntance} from '.';
 export class SearchApi {
   getSiminalResults(searchQuery: string) {
     return axiosIntance.get(
-      `/search` +
+      `/search?` +
         new URLSearchParams({
           v: searchQuery,
         }),
@@ -12,7 +12,7 @@ export class SearchApi {
 
   addResult(searchQuery: string) {
     return axiosIntance.post(
-      `/search` +
+      `/search?` +
         new URLSearchParams({
           v: searchQuery,
         }),
