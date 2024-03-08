@@ -107,7 +107,7 @@ export const WatchScreen = observer(() => {
           <PreviewComment videoId={videoId} />
         </View>
         {watchStore.videoList.map((item, index) => (
-          <VideoCard key={index} video={item} />
+          <VideoCard key={index} video={item} replace />
         ))}
       </ScrollView>
     </>

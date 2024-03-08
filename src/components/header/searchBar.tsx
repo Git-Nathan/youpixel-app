@@ -9,11 +9,13 @@ import SearchIcon from '../../assets/icons/search.svg';
 import SendIcon from '../../assets/icons/send.svg';
 import {api} from '../../axios';
 import {IRelatedSearch} from '../../interface';
-import {videosStore} from '../../screens/videosScreen';
+import {VideosStore} from '../../stores/videos';
 
-export const SearchBar = observer(() => {
-  const [store] = useState(() => videosStore);
+export interface ISearchBar {
+  store: VideosStore;
+}
 
+export const SearchBar = observer(({store}: ISearchBar) => {
   const [relatedSearch, setrelatedSearch] = useState<IRelatedSearch[]>([]);
 
   const handleSearch = () => {};

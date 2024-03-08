@@ -1,4 +1,4 @@
-import {NavigationContext} from '@react-navigation/native';
+import {NavigationContext, StackActions} from '@react-navigation/native';
 import moment from 'moment';
 import {useContext} from 'react';
 import {Image, Text, View} from 'react-native';
@@ -7,13 +7,18 @@ import {IVideo} from '../../interface';
 
 export interface IVideoCardProps {
   video: IVideo;
+  replace?: boolean;
 }
 
 export function VideoCard(props: IVideoCardProps) {
   const navigation = useContext(NavigationContext);
 
   const handleNavigation = () => {
-    navigation?.navigate('watch', {v: props.video._id});
+    if (props.replace) {
+      navigation?.dispatch(StackActions.replace('watch', {v: props.video._id}));
+    } else {
+      navigation?.navigate('watch', {v: props.video._id});
+    }
   };
 
   return (

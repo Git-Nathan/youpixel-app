@@ -5,12 +5,13 @@ export const VideosStackIntance = createStackNavigator();
 
 export function VideosStack() {
   return (
-    <VideosStackIntance.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}>
+    <VideosStackIntance.Navigator screenOptions={{headerShown: false}}>
       <VideosStackIntance.Screen
         name="videos-screen"
+        component={VideosScreen}
+      />
+      <VideosStackIntance.Screen
+        name="search-screen"
         component={VideosScreen}
       />
     </VideosStackIntance.Navigator>

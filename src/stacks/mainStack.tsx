@@ -4,7 +4,6 @@ import HomeIcon from '../assets/icons/home.svg';
 import SubscriptionsIcon from '../assets/icons/subscriptions.svg';
 import TrendingIcon from '../assets/icons/trending.svg';
 import UserIcon from '../assets/icons/user-octagon.svg';
-import {Header} from '../components/header/header';
 import {VideosScreen} from '../screens/videosScreen';
 import {globalStyles} from '../styles/globalStyles';
 import {VideosStack} from './videosStack';
@@ -24,7 +23,7 @@ export function MainStack(props: IMainStackProps) {
         },
         tabBarActiveTintColor: globalStyles.primaryColor,
         tabBarInactiveTintColor: 'white',
-        header: props => <Header {...props} />,
+        headerShown: false,
       }}>
       <Tab.Screen
         name="home"
