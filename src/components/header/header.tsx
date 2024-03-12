@@ -1,18 +1,27 @@
 import {Button} from '@rneui/themed';
 import {observer} from 'mobx-react-lite';
+import {useState} from 'react';
 import {Image, View} from 'react-native';
 import SearchIcon from '../../assets/icons/search.svg';
 import VideoIcon from '../../assets/icons/video.svg';
-import {VideosStore} from '../../stores/videos';
 import {SearchBar} from './searchBar';
 
-export interface IHeaderProps {
-  store: VideosStore;
-}
+export interface IHeaderProps {}
 
-export const Header = observer(({store}: IHeaderProps) => {
-  if (store.openSearchBar) {
-    return <SearchBar store={store} />;
+export const Header = observer(({}: IHeaderProps) => {
+  // Search bar
+  const [openSearchBar, setOpenSearchBar] = useState(false);
+
+  const handleOpenSearchBar = () => {
+    setOpenSearchBar(true);
+  };
+
+  const handleCloseSearchBar = () => {
+    setOpenSearchBar(false);
+  };
+
+  if (openSearchBar) {
+    return <SearchBar handleClose={handleCloseSearchBar} />;
   }
 
   return (
@@ -39,7 +48,7 @@ export const Header = observer(({store}: IHeaderProps) => {
         </Button>
         <Button
           onPress={() => {
-            store.handleOpenSearchBar();
+            handleOpenSearchBar();
           }}
           type="clear"
           buttonStyle={{

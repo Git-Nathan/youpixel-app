@@ -1,4 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
+import {SearchScreen} from '../screens/searchScreen';
 import {VideosScreen} from '../screens/videosScreen';
 
 export const VideosStackIntance = createStackNavigator();
@@ -12,7 +13,7 @@ export function VideosStack() {
       />
       <VideosStackIntance.Screen
         name="search-screen"
-        component={VideosScreen}
+        component={SearchScreen}
       />
     </VideosStackIntance.Navigator>
   );

@@ -10,6 +10,16 @@ export class VideoApi {
     return axiosIntance.get(`/videos/${id}`);
   }
 
+  getVideosBySearch(search_query: string, page: number) {
+    return axiosIntance.get(
+      `/videos/search?` +
+        new URLSearchParams({
+          search_query: search_query.trim(),
+          page: page.toString(),
+        }),
+    );
+  }
+
   getVideosTrending(page: number) {
     return axiosIntance.get(
       `/videos/topview?` +

@@ -1,4 +1,3 @@
-import {observer} from 'mobx-react-lite';
 import {useEffect, useState} from 'react';
 import {FlatList} from 'react-native';
 import {api} from '../axios';
@@ -7,15 +6,26 @@ import {VideoCardSkeleton} from '../components/skeleton/videoCard';
 import {VideoCard} from '../components/videoList/videoCard';
 import {IVideo} from '../interface';
 
-export const VideosScreen = observer(() => {
+export interface ITrendingScreenProps {}
+
+export function TrendingScreen(props: ITrendingScreenProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [videoList, setVideoList] = useState<IVideo[]>([]);
 
-  const getVideoList = async () => {
+  // Pagination
+  const [page, setPage] = useState(1);
+
+  const [numOfPage, setNumOfPage] = useState(0);
+
+  const [total, setTotal] = useState(0);
+
+  const getVideoList = async (page: number) => {
     setIsLoading(true);
     try {
-      const res = await api.video.getVideos();
+      const res = await api.video.getVideosTrending(page);
       setVideoList(res.data.data);
+      setNumOfPage(res.data.numberOfPages);
+      setTotal(res.data.total);
     } catch (error) {
       console.log('error', error);
     } finally {
@@ -24,8 +34,8 @@ export const VideosScreen = observer(() => {
   };
 
   useEffect(() => {
-    getVideoList();
-  }, []);
+    getVideoList(page);
+  }, [page]);
 
   return (
     <>
@@ -41,10 +51,10 @@ export const VideosScreen = observer(() => {
           keyExtractor={item => item._id}
           refreshing={isLoading}
           onRefresh={() => {
-            getVideoList();
+            getVideoList(1);
           }}
         />
       )}
     </>
   );
-});
+}

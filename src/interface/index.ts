@@ -79,6 +79,12 @@ export interface ICommentsResponse {
   total: number;
 }
 
+export interface ISearchResponse {
+  data: IVideo[];
+  numberOfPages: number;
+  total: number;
+}
+
 export interface IComment {
   _id: string;
   userId: string;

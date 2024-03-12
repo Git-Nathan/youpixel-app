@@ -6,6 +6,7 @@ import TrendingIcon from '../assets/icons/trending.svg';
 import UserIcon from '../assets/icons/user-octagon.svg';
 import {VideosScreen} from '../screens/videosScreen';
 import {globalStyles} from '../styles/globalStyles';
+import {TrendingStack} from './trendingStack';
 import {VideosStack} from './videosStack';
 
 const Tab = createBottomTabNavigator();
@@ -42,7 +43,7 @@ export function MainStack(props: IMainStackProps) {
       />
       <Tab.Screen
         name="trending"
-        component={VideosScreen}
+        component={TrendingStack}
         options={{
           tabBarLabel: 'Trending',
           tabBarIcon: ({focused}) => {
