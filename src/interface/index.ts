@@ -29,7 +29,7 @@ export interface IIcon {
 export interface ISigninData {
   name: string;
   email: string;
-  picture: string;
+  picture: string | null;
 }
 
 export interface IWatchVideo {

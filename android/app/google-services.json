@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "36544663310",
+    "firebase_url": "https://youpixels-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "youpixels",
+    "storage_bucket": "youpixels.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36544663310:android:58adcb39dee1a07b7ed15f",
+        "android_client_info": {
+          "package_name": "com.youpixelapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36544663310-4nfei809tgdlpu2i8g272h30u4igvbra.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.youpixelapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "36544663310-cad8o5ocg2vojla3qsb55hai0a7t51sj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLUwjpn8It4x3XRTDjx9bKA47fWscwSLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36544663310-cad8o5ocg2vojla3qsb55hai0a7t51sj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

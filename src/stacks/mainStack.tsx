@@ -1,9 +1,9 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import * as React from 'react';
 import HomeIcon from '../assets/icons/home.svg';
 import SubscriptionsIcon from '../assets/icons/subscriptions.svg';
 import TrendingIcon from '../assets/icons/trending.svg';
 import UserIcon from '../assets/icons/user-octagon.svg';
+import {AccountScreen} from '../screens/accountScreen';
 import {VideosScreen} from '../screens/videosScreen';
 import {globalStyles} from '../styles/globalStyles';
 import {TrendingStack} from './trendingStack';
@@ -73,7 +73,7 @@ export function MainStack(props: IMainStackProps) {
       />
       <Tab.Screen
         name="account"
-        component={VideosScreen}
+        component={AccountScreen}
         options={{
           tabBarLabel: 'Login',
           tabBarIcon: ({focused}) => {
