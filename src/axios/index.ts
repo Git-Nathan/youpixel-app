@@ -9,7 +9,7 @@ import {WatchedApi} from './watched';
 
 // export const axiosIntance = axios.create({ baseURL: 'https://youpixel-api.onrender.com/' })
 export const axiosIntance = axios.create({
-  baseURL: 'https://2847-118-70-56-13.ngrok-free.app/',
+  baseURL: 'https://757e-118-70-56-13.ngrok-free.app/',
 });
 
 const video = new VideoApi();

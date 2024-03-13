@@ -21,7 +21,7 @@ const MyTheme = {
 
 const Stack = createStackNavigator();
 
-function App(): JSX.Element {
+function App(): React.JSX.Element {
   return (
     <SafeAreaProvider>
       <NavigationContainer theme={MyTheme}>
