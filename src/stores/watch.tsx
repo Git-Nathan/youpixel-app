@@ -35,9 +35,6 @@ export class WatchStore {
     try {
       const res = await api.video.getVideo(videoId);
 
-      // Get using ChannelId
-      this.getChannel(res.data.data.userId as string);
-
       this.setVideo(res.data.data);
     } catch (error) {
       console.log('error', error);

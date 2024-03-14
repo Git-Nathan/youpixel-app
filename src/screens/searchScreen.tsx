@@ -1,7 +1,7 @@
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {observer} from 'mobx-react-lite';
 import {useEffect, useState} from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, Text} from 'react-native';
 import {api} from '../axios';
 import {HeaderSearch} from '../components/header/headerSearch';
 import {VideoCardSkeleton} from '../components/skeleton/videoCard';
@@ -56,6 +56,9 @@ export const SearchScreen = observer(() => {
           onRefresh={() => {
             getVideoList(1);
           }}
+          ListEmptyComponent={
+            <Text className="text-base text-white">No data available</Text>
+          }
         />
       )}
     </>

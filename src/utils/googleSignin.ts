@@ -19,6 +19,7 @@ export const signIn = async () => {
     });
 
     await AsyncStorage.setItem('currentUser', JSON.stringify(res.data.data));
+    await AsyncStorage.setItem('token', res.data.token);
   } catch (error: any) {
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
       // user cancelled the login flow
@@ -58,6 +59,8 @@ export const getCurrentUser = async () => {
 export const signOut = async () => {
   try {
     await GoogleSignin.signOut();
+    await AsyncStorage.removeItem('currentUser');
+    await AsyncStorage.removeItem('token');
   } catch (error) {
     console.error(error);
   }

@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, Text} from 'react-native';
 import {api} from '../axios';
 import {Header} from '../components/header/header';
 import {VideoCardSkeleton} from '../components/skeleton/videoCard';
@@ -53,6 +53,9 @@ export function TrendingScreen(props: ITrendingScreenProps) {
           onRefresh={() => {
             getVideoList(1);
           }}
+          ListEmptyComponent={
+            <Text className="text-base text-white">No data available</Text>
+          }
         />
       )}
     </>

@@ -6,6 +6,7 @@ import {useEffect, useState} from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import ShareIcon from '../assets/icons/share.svg';
+import {api} from '../axios';
 import {VideoCardSkeleton} from '../components/skeleton/videoCard';
 import {VideoCard} from '../components/videoList/videoCard';
 import {Channel} from '../components/watch/channel';
@@ -29,10 +30,18 @@ export const WatchScreen = observer(() => {
 
   useEffect(() => {
     watchStore.getDetail(videoId);
-  }, []);
-
-  useEffect(() => {
     watchStore.getVideoList();
+    (() => {
+      api.watched.addWatchedVideo(videoId);
+    })();
+
+    const timeoutId = setTimeout(() => {
+      api.video.addView(videoId);
+    }, 30000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   if (watchStore.isLoading)

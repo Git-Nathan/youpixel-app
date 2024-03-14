@@ -54,7 +54,7 @@ export class VideoApi {
   }
 
   addView(id: string) {
-    return axiosIntance.patch('/videos/addview' + id);
+    return axiosIntance.patch('/videos/addview/' + id);
   }
 
   editVideo(id: string, video: IVideo) {

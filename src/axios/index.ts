@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {CommentApi} from './comment';
 import {LikeApi} from './like';
@@ -9,7 +10,16 @@ import {WatchedApi} from './watched';
 
 // export const axiosIntance = axios.create({ baseURL: 'https://youpixel-api.onrender.com/' })
 export const axiosIntance = axios.create({
-  baseURL: 'https://757e-118-70-56-13.ngrok-free.app/',
+  baseURL: 'https://55aa-118-70-56-13.ngrok-free.app/',
+});
+
+axiosIntance.interceptors.request.use(async req => {
+  const value = await AsyncStorage.getItem('token');
+  if (value !== null) {
+    req.headers.Authorization = value;
+  }
+
+  return req;
 });
 
 const video = new VideoApi();

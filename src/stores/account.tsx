@@ -31,7 +31,7 @@ export class AccountStore {
       const jsonValue = await AsyncStorage.getItem('currentUser');
       if (jsonValue) {
         const currentUser = JSON.parse(jsonValue);
-        this.setCurrentUser(currentUser.data);
+        this.setCurrentUser(currentUser);
         this.setIsSignedIn(true);
       } else {
         this.setCurrentUser({} as IUserInfo);
