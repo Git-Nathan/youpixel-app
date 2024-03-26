@@ -95,7 +95,7 @@ export class WatchStore {
     try {
       const res = await api.like.getNumberOfLikes(videoId);
 
-      this.setNumberOfLikes(res.data.data);
+      this.setNumberOfLikes(res?.data?.data);
     } catch (error) {
       console.log('error', error);
     } finally {

@@ -21,6 +21,7 @@ export const signIn = async () => {
     await AsyncStorage.setItem('currentUser', JSON.stringify(res.data.data));
     await AsyncStorage.setItem('token', res.data.token);
   } catch (error: any) {
+    console.log('error', error);
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
       // user cancelled the login flow
     } else if (error.code === statusCodes.IN_PROGRESS) {

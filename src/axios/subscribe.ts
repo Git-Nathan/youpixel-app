@@ -8,4 +8,8 @@ export class SubscribeApi {
   unsubscribe(channelId: string) {
     return axiosIntance.delete(`/subscribe/${channelId}`);
   }
+
+  getStatus(channelId: string) {
+    return axiosIntance.get(`/subscribe/${channelId}`);
+  }
 }

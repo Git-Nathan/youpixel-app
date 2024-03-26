@@ -1,12 +1,12 @@
 import {Skeleton} from '@rneui/base';
 import {observer} from 'mobx-react-lite';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {accountStoreIntance} from '../../auth/authProvider';
+import {api} from '../../axios';
 import {watchStoreIntance} from '../../screens/watchScreen';
 
 export const Channel = observer(() => {
-  const [btnLoading, setbtnLoading] = useState(false);
   const [watchStore] = useState(() => watchStoreIntance);
   const [accountStore] = useState(() => accountStoreIntance);
   const [subscribeStatus, setSubscribeStatus] = useState<boolean | null>(null);
@@ -14,8 +14,43 @@ export const Channel = observer(() => {
   const handleGoToChannel = () => {};
 
   const handleSubscribe = async () => {
-    setbtnLoading(true);
+    setSubscribeStatus(true);
+    try {
+      watchStore?.channel?._id &&
+        (await api.subscribe.subscribe(watchStore?.channel?._id));
+    } catch (error) {
+      console.log('error', error);
+    } finally {
+      updateStatus();
+    }
   };
+
+  const handleUnSubscribe = async () => {
+    setSubscribeStatus(false);
+    try {
+      watchStore?.channel?._id &&
+        (await api.subscribe.unsubscribe(watchStore?.channel?._id));
+    } catch (error) {
+      console.log('error', error);
+    } finally {
+      updateStatus();
+    }
+  };
+
+  const updateStatus = async () => {
+    try {
+      const res = await api.subscribe.getStatus(watchStore?.channel?._id);
+      setSubscribeStatus(res?.data?.data?.status);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  useEffect(() => {
+    if (watchStore?.channel?._id) {
+      updateStatus();
+    }
+  }, [watchStore?.channel?._id]);
 
   if (watchStore.channelLoading) {
     return (
@@ -48,29 +83,24 @@ export const Channel = observer(() => {
         </Text>
       </View>
       {watchStore.channel._id === accountStore.currentUser._id ? (
-        <TouchableOpacity
-          className="flex h-8 flex-row items-center rounded-full bg-white px-3"
-          style={{
-            opacity: btnLoading ? 0.3 : 1,
-          }}>
+        <TouchableOpacity className="flex h-8 flex-row items-center rounded-full bg-white px-3">
           <Text className="text-xs font-bold text-black">My videos</Text>
         </TouchableOpacity>
       ) : (
         <>
           {subscribeStatus ? (
             <TouchableOpacity
-              className="flex h-8 flex-row items-center rounded-full bg-white px-3"
+              className="flex h-8 flex-row items-center rounded-full px-3"
+              onPress={handleUnSubscribe}
               style={{
-                opacity: btnLoading ? 0.3 : 1,
+                backgroundColor: '#1e232e',
               }}>
-              <Text className="text-xs font-bold text-black">Subscribed</Text>
+              <Text className="text-xs font-bold text-white">Subscribed</Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
               className="flex h-8 flex-row items-center rounded-full bg-white px-3"
-              style={{
-                opacity: btnLoading ? 0.3 : 1,
-              }}>
+              onPress={handleSubscribe}>
               <Text className="text-xs font-bold text-black">Subscribe</Text>
             </TouchableOpacity>
           )}
