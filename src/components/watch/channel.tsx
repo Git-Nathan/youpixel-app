@@ -1,25 +1,21 @@
 import {Skeleton} from '@rneui/base';
 import {observer} from 'mobx-react-lite';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {accountStoreIntance} from '../../auth/authProvider';
 import {watchStoreIntance} from '../../screens/watchScreen';
 
 export const Channel = observer(() => {
   const [btnLoading, setbtnLoading] = useState(false);
-  const [subscribeStatus, setSubscribeStatus] = useState<boolean | null>(null);
   const [watchStore] = useState(() => watchStoreIntance);
+  const [accountStore] = useState(() => accountStoreIntance);
+  const [subscribeStatus, setSubscribeStatus] = useState<boolean | null>(null);
 
   const handleGoToChannel = () => {};
 
   const handleSubscribe = async () => {
     setbtnLoading(true);
   };
-
-  useEffect(() => {
-    if (watchStore.video?.userId) {
-      watchStore.getChannel(watchStore.video?.userId);
-    }
-  }, [watchStore.video?.userId]);
 
   if (watchStore.channelLoading) {
     return (
@@ -51,13 +47,35 @@ export const Channel = observer(() => {
           {watchStore.channel?.numOfSubscriber || ''}
         </Text>
       </View>
-      <TouchableOpacity
-        className="flex h-8 flex-row items-center rounded-full bg-white px-3"
-        style={{
-          opacity: btnLoading ? 0.3 : 1,
-        }}>
-        <Text className="text-xs font-bold text-black">Subscribe</Text>
-      </TouchableOpacity>
+      {watchStore.channel._id === accountStore.currentUser._id ? (
+        <TouchableOpacity
+          className="flex h-8 flex-row items-center rounded-full bg-white px-3"
+          style={{
+            opacity: btnLoading ? 0.3 : 1,
+          }}>
+          <Text className="text-xs font-bold text-black">My videos</Text>
+        </TouchableOpacity>
+      ) : (
+        <>
+          {subscribeStatus ? (
+            <TouchableOpacity
+              className="flex h-8 flex-row items-center rounded-full bg-white px-3"
+              style={{
+                opacity: btnLoading ? 0.3 : 1,
+              }}>
+              <Text className="text-xs font-bold text-black">Subscribed</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              className="flex h-8 flex-row items-center rounded-full bg-white px-3"
+              style={{
+                opacity: btnLoading ? 0.3 : 1,
+              }}>
+              <Text className="text-xs font-bold text-black">Subscribe</Text>
+            </TouchableOpacity>
+          )}
+        </>
+      )}
     </TouchableOpacity>
   );
 });

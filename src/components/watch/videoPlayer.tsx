@@ -26,7 +26,7 @@ export const VideoPlayer = observer(() => {
     }
     hiddenTimeoutRef.current = setTimeout(() => {
       setClicked(false);
-    }, 2);
+    }, 2000);
   };
 
   // Video player

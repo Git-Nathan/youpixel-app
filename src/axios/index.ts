@@ -10,7 +10,7 @@ import {WatchedApi} from './watched';
 
 // export const axiosIntance = axios.create({ baseURL: 'https://youpixel-api.onrender.com/' })
 export const axiosIntance = axios.create({
-  baseURL: 'https://55aa-118-70-56-13.ngrok-free.app/',
+  baseURL: 'http://192.168.1.182:5002/',
 });
 
 axiosIntance.interceptors.request.use(async req => {
