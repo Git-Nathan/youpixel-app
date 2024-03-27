@@ -12,4 +12,13 @@ export class SubscribeApi {
   getStatus(channelId: string) {
     return axiosIntance.get(`/subscribe/${channelId}`);
   }
+
+  getSubscribedVideos(page: number) {
+    return axiosIntance.get(
+      `/subscribe/subscribed?` +
+        new URLSearchParams({
+          page: page.toString(),
+        }),
+    );
+  }
 }

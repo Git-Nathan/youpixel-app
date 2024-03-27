@@ -7,9 +7,9 @@ import SubscriptionsIcon from '../assets/icons/subscriptions.svg';
 import TrendingIcon from '../assets/icons/trending.svg';
 import UserIcon from '../assets/icons/user-octagon.svg';
 import {accountStoreIntance} from '../auth/authProvider';
-import {VideosScreen} from '../screens/videosScreen';
 import {globalStyles} from '../styles/globalStyles';
 import {AccountStack} from './accountStack';
+import {SubscriptionStack} from './subscriptionStack';
 import {TrendingStack} from './trendingStack';
 import {VideosStack} from './videosStack';
 
@@ -64,7 +64,7 @@ export const MainStack = observer((props: IMainStackProps) => {
       />
       <Tab.Screen
         name="subscriptions"
-        component={VideosScreen}
+        component={SubscriptionStack}
         options={{
           tabBarLabel: 'Subscriptions',
           tabBarIcon: ({focused}) => {

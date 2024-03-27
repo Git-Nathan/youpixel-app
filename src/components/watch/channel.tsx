@@ -82,11 +82,7 @@ export const Channel = observer(() => {
           {watchStore.channel?.numOfSubscriber || ''}
         </Text>
       </View>
-      {watchStore.channel._id === accountStore.currentUser._id ? (
-        <TouchableOpacity className="flex h-8 flex-row items-center rounded-full bg-white px-3">
-          <Text className="text-xs font-bold text-black">My videos</Text>
-        </TouchableOpacity>
-      ) : (
+      {watchStore.channel._id != accountStore.currentUser._id && (
         <>
           {subscribeStatus ? (
             <TouchableOpacity
