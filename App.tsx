@@ -7,6 +7,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {AuthProvider} from './src/auth/authProvider';
 import {WatchScreen} from './src/screens/watchScreen';
 import {MainStack} from './src/stacks/mainStack';
+import {StuidoStack} from './src/stacks/studioStack';
 import {globalStyles} from './src/styles/globalStyles';
 
 const MyTheme = {
@@ -34,6 +35,8 @@ function App(): React.JSX.Element {
             }}>
             <Stack.Screen name="main" component={MainStack} />
             <Stack.Screen name="watch" component={WatchScreen} />
+            <Stack.Screen name="studio" component={StuidoStack} />
+            <Stack.Screen name="video-detail" component={StuidoStack} />
           </Stack.Navigator>
         </NavigationContainer>
       </AuthProvider>

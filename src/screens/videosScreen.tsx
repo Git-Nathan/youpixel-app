@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 import {FlatList, Text} from 'react-native';
 import {api} from '../axios';
 import {Header} from '../components/header/header';
-import {VideoCardSkeleton} from '../components/skeleton/videoCard';
+import {VideoCardSkeleton} from '../components/skeleton/videoCardSkeleton';
 import {VideoCard} from '../components/videoList/videoCard';
 import {IVideo} from '../interface';
 

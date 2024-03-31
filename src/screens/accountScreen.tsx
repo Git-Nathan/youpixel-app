@@ -42,6 +42,10 @@ export const AccountScreen = observer(({}: IAccountScreen) => {
     navigation?.dispatch(StackActions.push('history-screen'));
   };
 
+  const handleGoToMyVideos = () => {
+    navigation?.navigate('studio');
+  };
+
   return (
     <>
       {accountStore.isSignedIn ? (
@@ -77,7 +81,7 @@ export const AccountScreen = observer(({}: IAccountScreen) => {
             <AccountMenuBtn
               title="Your videos"
               Icon={VideoSquareIcon}
-              onPress={handleGoToHistory}
+              onPress={handleGoToMyVideos}
             />
           </View>
         </>

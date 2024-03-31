@@ -1,6 +1,7 @@
+import {NavigationContext} from '@react-navigation/native';
 import {Button} from '@rneui/themed';
 import {observer} from 'mobx-react-lite';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {Image, View} from 'react-native';
 import SearchIcon from '../../assets/icons/search.svg';
 import VideoIcon from '../../assets/icons/video.svg';
@@ -18,6 +19,12 @@ export const Header = observer(({}: IHeaderProps) => {
 
   const handleCloseSearchBar = () => {
     setOpenSearchBar(false);
+  };
+  // navigation
+  const navigation = useContext(NavigationContext);
+
+  const handleGoToVMyVideos = () => {
+    navigation?.navigate('studio');
   };
 
   if (openSearchBar) {
@@ -43,8 +50,9 @@ export const Header = observer(({}: IHeaderProps) => {
             borderRadius: 50,
             width: 40,
             height: 40,
-          }}>
-          <VideoIcon />
+          }}
+          onPress={handleGoToVMyVideos}>
+          <VideoIcon color={'white'} />
         </Button>
         <Button
           onPress={() => {
