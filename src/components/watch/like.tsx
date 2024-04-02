@@ -1,10 +1,12 @@
+import {NavigationContext} from '@react-navigation/native';
 import {Skeleton} from '@rneui/base';
 import {observer} from 'mobx-react-lite';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import DislikeIcon from '../../assets/icons/dislike.svg';
 import LikeIcon from '../../assets/icons/like.svg';
+import {accountStoreIntance} from '../../auth/authProvider';
 import {api} from '../../axios';
 import {watchStoreIntance} from '../../screens/watchScreen';
 import {globalStyles} from '../../styles/globalStyles';
@@ -16,6 +18,12 @@ export interface ILike {
 export const Like = observer((props: ILike) => {
   const [watchStore] = useState(() => watchStoreIntance);
   const [likeStatus, setlikeStatus] = useState<boolean | undefined>(undefined);
+  const navigation = useContext(NavigationContext);
+  const [accountStore] = useState(() => accountStoreIntance);
+
+  const handleGoToAccount = () => {
+    navigation?.navigate('account');
+  };
 
   useEffect(() => {
     watchStore.getNumberOfLikes(props.videoId);
@@ -85,7 +93,7 @@ export const Like = observer((props: ILike) => {
       {likeStatus ? (
         <TouchableOpacity
           className="flex h-8 flex-row items-center px-3"
-          onPress={handleUnlike}>
+          onPress={accountStore.isSignedIn ? handleUnlike : handleGoToAccount}>
           <LikeIcon color={globalStyles.primaryColor} width={18} height={18} />
           <Text className="ml-2" style={{color: globalStyles.primaryColor}}>
             {watchStore.numberOfLikes?.liked > 0
@@ -96,7 +104,7 @@ export const Like = observer((props: ILike) => {
       ) : (
         <TouchableOpacity
           className="flex h-8 flex-row items-center px-3"
-          onPress={handleLike}>
+          onPress={accountStore.isSignedIn ? handleLike : handleGoToAccount}>
           <LikeIcon color="white" width={18} height={18} />
           <Text className="ml-2 text-white">
             {watchStore.numberOfLikes?.liked > 0
@@ -114,7 +122,7 @@ export const Like = observer((props: ILike) => {
       {likeStatus === false ? (
         <TouchableOpacity
           className="flex h-8 flex-row items-center px-3"
-          onPress={handleUnlike}>
+          onPress={accountStore.isSignedIn ? handleUnlike : handleGoToAccount}>
           <DislikeIcon
             color={globalStyles.primaryColor}
             width={18}
@@ -129,7 +137,7 @@ export const Like = observer((props: ILike) => {
       ) : (
         <TouchableOpacity
           className="flex h-8 flex-row items-center px-3"
-          onPress={handleDisLike}>
+          onPress={accountStore.isSignedIn ? handleDisLike : handleGoToAccount}>
           <DislikeIcon color="white" width={18} height={18} />
           {watchStore.numberOfLikes?.disliked > 0 && (
             <Text className="ml-2 text-white">

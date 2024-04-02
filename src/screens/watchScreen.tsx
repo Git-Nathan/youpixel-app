@@ -5,7 +5,6 @@ import moment from 'moment';
 import {useEffect, useState} from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import ShareIcon from '../assets/icons/share.svg';
 import {api} from '../axios';
 import {VideoCardSkeleton} from '../components/skeleton/videoCardSkeleton';
 import {VideoCard} from '../components/videoList/videoCard';
@@ -99,7 +98,7 @@ export const WatchScreen = observer(() => {
 
           <View className="mt-3 flex flex-row items-center space-x-3">
             <Like videoId={videoId} />
-            <View
+            {/* <View
               className="flex flex-row rounded-full"
               style={{
                 backgroundColor: '#1e232e',
@@ -110,7 +109,7 @@ export const WatchScreen = observer(() => {
                 <ShareIcon color="white" width={18} height={18} />
                 <Text className="ml-2 text-white">Share</Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
           </View>
 
           <PreviewComment videoId={videoId} />

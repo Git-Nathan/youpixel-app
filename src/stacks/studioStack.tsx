@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator();
 
 export interface IMainStackProps {}
 
-export const StuidoStack = observer((props: IMainStackProps) => {
+export const StudioStack = observer((props: IMainStackProps) => {
   return (
     <Tab.Navigator
       screenOptions={{

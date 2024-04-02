@@ -1,6 +1,7 @@
+import {NavigationContext} from '@react-navigation/native';
 import {Skeleton} from '@rneui/base';
 import {observer} from 'mobx-react-lite';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {accountStoreIntance} from '../../auth/authProvider';
 import {api} from '../../axios';
@@ -10,6 +11,7 @@ export const Channel = observer(() => {
   const [watchStore] = useState(() => watchStoreIntance);
   const [accountStore] = useState(() => accountStoreIntance);
   const [subscribeStatus, setSubscribeStatus] = useState<boolean | null>(null);
+  const navigation = useContext(NavigationContext);
 
   const handleGoToChannel = () => {};
 
@@ -44,6 +46,10 @@ export const Channel = observer(() => {
     } catch (error) {
       console.log('error', error);
     }
+  };
+
+  const handleGoToAccount = () => {
+    navigation?.navigate('account');
   };
 
   useEffect(() => {
@@ -87,7 +93,9 @@ export const Channel = observer(() => {
           {subscribeStatus ? (
             <TouchableOpacity
               className="flex h-8 flex-row items-center rounded-full px-3"
-              onPress={handleUnSubscribe}
+              onPress={
+                accountStore.isSignedIn ? handleUnSubscribe : handleGoToAccount
+              }
               style={{
                 backgroundColor: '#1e232e',
               }}>
@@ -96,7 +104,9 @@ export const Channel = observer(() => {
           ) : (
             <TouchableOpacity
               className="flex h-8 flex-row items-center rounded-full bg-white px-3"
-              onPress={handleSubscribe}>
+              onPress={
+                accountStore.isSignedIn ? handleSubscribe : handleGoToAccount
+              }>
               <Text className="text-xs font-bold text-black">Subscribe</Text>
             </TouchableOpacity>
           )}

@@ -1,6 +1,7 @@
 import {NavigationContext} from '@react-navigation/native';
+import moment from 'moment';
 import {useContext} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {IVideo} from '../../interface';
 
 export interface IStudioVideoCardProps {
@@ -16,9 +17,23 @@ export function StudioVideoCard(props: IStudioVideoCardProps) {
     <TouchableOpacity
       onPress={handleNavigation}
       className="mx-3 mb-4 flex flex-row">
-      <View className="aspect-[16/9] w-5/12"></View>
+      <Image
+        className="aspect-[16/9] w-5/12"
+        source={{
+          uri: props?.video?.imgUrl,
+        }}
+      />
       <View className="bg-red flex w-7/12 space-y-2 pl-4">
-        <View className="flex flex-row space-x-2"></View>
+        <View className="flex space-y-1">
+          <Text numberOfLines={2} className="font-bold text-white">
+            {props?.video?.title}
+          </Text>
+          <Text numberOfLines={2} className="mt-[2px] text-[12px] text-[#aaa]">
+            {`${props.video.views} views`}
+            <Text className="text-[#f05123]"> • </Text>
+            {moment(props?.video?.createdAt).fromNow()}
+          </Text>
+        </View>
       </View>
     </TouchableOpacity>
   );

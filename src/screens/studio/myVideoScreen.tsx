@@ -1,5 +1,8 @@
-import {useEffect, useState} from 'react';
+import {NavigationContext} from '@react-navigation/native';
+import {Button} from '@rneui/base';
+import {useContext, useEffect, useState} from 'react';
 import {FlatList, Text} from 'react-native';
+import VideoAddIcon from '../../assets/icons/video-add.svg';
 import {accountStoreIntance} from '../../auth/authProvider';
 import {api} from '../../axios';
 import {TitleHeader} from '../../components/header/titleHeader';
@@ -10,6 +13,7 @@ import {IVideo} from '../../interface';
 export interface IMyVideoScreenProps {}
 
 export function MyVideoScreen(props: IMyVideoScreenProps) {
+  const navigation = useContext(NavigationContext);
   const [accountStore] = useState(() => accountStoreIntance);
   const [isLoading, setIsLoading] = useState(true);
   const [videoList, setVideoList] = useState<IVideo[]>([]);
@@ -36,7 +40,21 @@ export function MyVideoScreen(props: IMyVideoScreenProps) {
 
   return (
     <>
-      <TitleHeader title="My Videos" />
+      <TitleHeader title="My Videos">
+        <Button
+          type="clear"
+          radius="lg"
+          buttonStyle={{
+            borderRadius: 50,
+            width: 40,
+            height: 40,
+          }}
+          onPress={() => {
+            navigation?.navigate('video-form');
+          }}>
+          <VideoAddIcon color={'white'} />
+        </Button>
+      </TitleHeader>
       {isLoading ? (
         Array.from({length: 4}).map((_, index) => (
           <StudioVideoCardSkeleton key={index} />

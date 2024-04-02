@@ -1,8 +1,9 @@
+import {NavigationContext} from '@react-navigation/native';
 import {Skeleton} from '@rneui/base';
 import {Dialog} from '@rneui/themed';
 import {observer} from 'mobx-react-lite';
 import moment from 'moment';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Image, ScrollView, Text, TextInput, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {accountStoreIntance} from '../../auth/authProvider';
@@ -16,6 +17,7 @@ export interface IPreviewComment {
 export const PreviewComment = observer((props: IPreviewComment) => {
   const [watchStore] = useState(() => watchStoreIntance);
   const [accountStore] = useState(() => accountStoreIntance);
+  const navigation = useContext(NavigationContext);
 
   useEffect(() => {
     watchStore.getComment(props.videoId, 1);
@@ -42,6 +44,10 @@ export const PreviewComment = observer((props: IPreviewComment) => {
     }
   };
 
+  const handleGoToAccount = () => {
+    navigation?.navigate('account');
+  };
+
   if (watchStore.commentLoading) {
     return (
       <View className="mb-3 mt-5">
@@ -57,7 +63,7 @@ export const PreviewComment = observer((props: IPreviewComment) => {
         style={{
           backgroundColor: '#1e232e',
         }}
-        onPress={toggleDialog}>
+        onPress={accountStore.isSignedIn ? toggleDialog : handleGoToAccount}>
         <Text className="text-sm font-bold text-white">
           Comments{' '}
           <Text className="text-sm font-normal text-[#aaa]">
