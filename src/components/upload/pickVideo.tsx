@@ -1,25 +1,25 @@
 import {getDownloadURL, ref, uploadBytesResumable} from 'firebase/storage';
 import {useCallback, useEffect, useState} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
-import NewImageIcon from '../../assets/icons/add-image.svg';
+import NewVideoIcon from '../../assets/icons/video-add.svg';
 import {VideoRequest} from '../../interface';
 import {SelectedFile} from '../../screens/studio/videoFormScreen';
 import {storage} from '../../utils/firebase';
 
-export interface IPickImageProps {
+export interface IPickVideoProps {
   inputs: VideoRequest;
   setInputs: React.Dispatch<React.SetStateAction<VideoRequest>>;
 }
 
-export function PickImage({inputs, setInputs}: IPickImageProps) {
-  const [img, setImg] = useState<SelectedFile | undefined>(undefined);
-  const [imgPerc, setImgPerc] = useState(0);
+export function PickVideo({inputs, setInputs}: IPickVideoProps) {
+  const [video, setVideo] = useState<SelectedFile | undefined>(undefined);
+  const [videoPerc, setVideoPerc] = useState(0);
 
-  const handleSelectThumbnail = async () => {
+  const handleSelectVideo = async () => {
     try {
       const doc = await DocumentPicker.pick({
-        type: [DocumentPicker.types.images],
+        type: [DocumentPicker.types.video],
       });
       if (doc[0]?.uri) {
         const filePath = doc[0]?.uri;
@@ -43,18 +43,18 @@ export function PickImage({inputs, setInputs}: IPickImageProps) {
           name: doc[0]?.name as string,
           blob,
         };
-        setImg(file);
+        setVideo(file);
       }
     } catch (error) {
       console.log('error', error);
     }
   };
 
-  const uploadImage = useCallback(
+  const uploadVideo = useCallback(
     (file: SelectedFile) => {
       const fileName = new Date().getTime() + file.name;
-      const imagePath = `images/${fileName}`;
-      const storageRef = ref(storage, imagePath);
+      const videoPath = `videos/${fileName}`;
+      const storageRef = ref(storage, videoPath);
       const uploadTask = uploadBytesResumable(storageRef, file.blob);
 
       uploadTask.on(
@@ -62,7 +62,7 @@ export function PickImage({inputs, setInputs}: IPickImageProps) {
         snapshot => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setImgPerc(Math.round(progress));
+          setVideoPerc(Math.round(progress));
         },
         error => {},
         () => {
@@ -70,51 +70,32 @@ export function PickImage({inputs, setInputs}: IPickImageProps) {
             setInputs(prev => {
               return {
                 ...prev,
-                imgUrl: downloadURL,
-                imgPath: imagePath,
+                videoUrl: downloadURL,
+                videoPath: videoPath,
               };
             });
           });
         },
       );
     },
-    [inputs?.imgPath],
+    [inputs?.videoPath],
   );
 
   useEffect(() => {
-    if (!inputs?.imgPath) {
-      img && uploadImage(img);
+    if (!inputs?.videoPath) {
+      video && uploadVideo(video);
     }
-  }, [uploadImage, img, inputs?.imgPath]);
-
-  if (imgPerc === 0) {
-    return (
-      <TouchableOpacity
-        onPress={handleSelectThumbnail}
-        className="mb-3 flex aspect-[16/9] w-full items-center justify-center rounded-lg border border-dotted border-gray-400">
-        <View className="flex items-center">
-          <NewImageIcon color="white" />
-
-          <Text className="mt-2 text-white">Pick a thumbnail</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  }
-
-  if (imgPerc > 0 && imgPerc < 100) {
-    return (
-      <View className="mb-3 flex aspect-[16/9] w-full items-center justify-center rounded-lg border border-dotted border-gray-400">
-        <Text className="mt-2 text-white">{'Uploading: ' + imgPerc + '%'}</Text>
-      </View>
-    );
-  }
+  }, [uploadVideo, video, inputs?.videoPath]);
 
   return (
-    <Image
-      className="mb-3 flex aspect-[16/9] w-full items-center justify-center rounded-lg border border-dotted border-gray-400"
-      source={{
-        uri: inputs?.imgUrl,
-      }}
-    />
+    <TouchableOpacity
+      onPress={handleSelectVideo}
+      className="mb-3 flex aspect-[16/9] w-full items-center justify-center rounded-lg border border-dotted border-gray-400">
+      <View className="flex items-center">
+        <NewVideoIcon color="white" />
+
+        <Text className="mt-2 text-white">Pick a video</Text>
+      </View>
+    </TouchableOpacity>
   );
 }
