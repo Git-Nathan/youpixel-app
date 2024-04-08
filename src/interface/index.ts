@@ -13,6 +13,18 @@ export interface IVideo {
   userInfo: IUserInfo;
 }
 
+export interface VideoRequest {
+  userId: string;
+  title: string;
+  desc: string;
+  duration: number;
+  imgUrl: string;
+  imgPath: string;
+  videoUrl: string;
+  videoPath: string;
+  status: string;
+}
+
 export interface IUserInfo {
   _id: string;
   name: string;
