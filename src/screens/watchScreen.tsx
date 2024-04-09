@@ -1,19 +1,19 @@
-import {RouteProp, useRoute} from '@react-navigation/native';
-import {Skeleton} from '@rneui/base';
-import {observer} from 'mobx-react-lite';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { Skeleton } from '@rneui/base';
+import { observer } from 'mobx-react-lite';
 import moment from 'moment';
-import {useEffect, useState} from 'react';
-import {ScrollView, Text, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {api} from '../axios';
-import {VideoCardSkeleton} from '../components/skeleton/videoCardSkeleton';
-import {VideoCard} from '../components/videoList/videoCard';
-import {Channel} from '../components/watch/channel';
-import {Like} from '../components/watch/like';
-import {PreviewComment} from '../components/watch/previewComment';
-import {VideoPlayer} from '../components/watch/videoPlayer';
-import {WatchStore} from '../stores/watch';
-import {Params} from '../types';
+import { useEffect, useState } from 'react';
+import { ScrollView, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { api } from '../axios';
+import { VideoCardSkeleton } from '../components/skeleton/videoCardSkeleton';
+import { VideoCard } from '../components/videoList/videoCard';
+import { Channel } from '../components/watch/channel';
+import { Like } from '../components/watch/like';
+import { PreviewComment } from '../components/watch/previewComment';
+import { VideoPlayer } from '../components/watch/videoPlayer';
+import { WatchStore } from '../stores/watch';
+import { Params } from '../types';
 
 export const watchStoreIntance = new WatchStore();
 
@@ -75,7 +75,7 @@ export const WatchScreen = observer(() => {
 
   return (
     <>
-      <VideoPlayer />
+      <VideoPlayer videoUri={watchStore?.video?.videoUrl} />
       <ScrollView>
         <View className="mb-3 p-3">
           <TouchableOpacity onPress={handleShowDesc}>

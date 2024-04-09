@@ -1,5 +1,5 @@
+import {Skeleton} from '@rneui/base';
 import {Slider} from '@rneui/themed';
-import {observer} from 'mobx-react-lite';
 import {useRef, useState} from 'react';
 import {StatusBar, Text, TouchableOpacity, View} from 'react-native';
 import Orientation from 'react-native-orientation-locker';
@@ -9,13 +9,15 @@ import ForwardIcon from '../../assets/icons/forward-10-seconds.svg';
 import FullscreenIcon from '../../assets/icons/full-screen.svg';
 import PauseIcon from '../../assets/icons/pause.svg';
 import PlayIcon from '../../assets/icons/play.svg';
-import {watchStoreIntance} from '../../screens/watchScreen';
 import {globalStyles} from '../../styles/globalStyles';
 import {videoTimeFormat} from '../../utils/videoTimeFormat';
 
-export const VideoPlayer = observer(() => {
-  const [watchStore] = useState(() => watchStoreIntance);
+export interface IVideoPlayer {
+  videoUri: string;
+  setDuration?: (duration: number) => void;
+}
 
+export const VideoPlayer = ({videoUri, setDuration}: IVideoPlayer) => {
   // Auto hidden controls
   const hiddenTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -59,18 +61,31 @@ export const VideoPlayer = observer(() => {
     setFullScreen(!fullScreen);
   };
 
+  if (!videoUri) {
+    return (
+      <View className="aspect-[16/9] w-full">
+        <Skeleton height="100%" />
+      </View>
+    );
+  }
+
   return (
     <View className="flex">
       <TouchableOpacity className="w-full" onPress={handlePressControls}>
         <Video
           resizeMode="contain"
+          onLoad={data => {
+            if (setDuration) {
+              setDuration(data.duration);
+            }
+          }}
           style={{
             width: '100%',
             height: fullScreen ? '100%' : undefined,
             aspectRatio: fullScreen ? undefined : 1.77,
             backgroundColor: 'black',
           }}
-          source={{uri: watchStore.video.videoUrl}}
+          source={{uri: videoUri}}
           ref={videoRef}
           paused={paused}
           onProgress={x => {
@@ -157,4 +172,4 @@ export const VideoPlayer = observer(() => {
       </TouchableOpacity>
     </View>
   );
-});
+};

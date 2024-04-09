@@ -16,8 +16,6 @@ export interface SelectedFile {
 export interface IVideoFormScreenProps {}
 
 export function VideoFormScreen(props: IVideoFormScreenProps) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
   const [inputs, setInputs] = useState({
     title: '',
     desc: '',
@@ -29,13 +27,20 @@ export function VideoFormScreen(props: IVideoFormScreenProps) {
     status: 'pending',
   } as VideoRequest);
 
+  console.log('inputs', inputs);
+
   const handleUpload = async () => {};
 
   return (
     <>
       <TitleHeader title="New video">
         <Button
-          disabled
+          disabled={
+            !inputs?.imgUrl ||
+            !inputs?.videoUrl ||
+            !inputs?.duration ||
+            !inputs?.title
+          }
           onPress={handleUpload}
           className="rounded-md bg-blue-700 px-4">
           <Text className="text-white">Confirm</Text>
@@ -45,9 +50,9 @@ export function VideoFormScreen(props: IVideoFormScreenProps) {
       <PickVideo inputs={inputs} setInputs={setInputs} />
 
       <Input
-        value={title}
+        value={inputs.title}
         onChangeText={text => {
-          setTitle(text);
+          setInputs(prev => ({...prev, title: text}));
         }}
         style={{
           color: 'white',
@@ -56,11 +61,11 @@ export function VideoFormScreen(props: IVideoFormScreenProps) {
       />
 
       <Input
-        value={description}
+        value={inputs.desc}
         multiline={true}
         numberOfLines={4}
         onChangeText={text => {
-          setDescription(text);
+          setInputs(prev => ({...prev, desc: text}));
         }}
         style={{
           color: 'white',

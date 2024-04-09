@@ -6,6 +6,7 @@ import NewVideoIcon from '../../assets/icons/video-add.svg';
 import {VideoRequest} from '../../interface';
 import {SelectedFile} from '../../screens/studio/videoFormScreen';
 import {storage} from '../../utils/firebase';
+import {VideoPlayer} from '../watch/videoPlayer';
 
 export interface IPickVideoProps {
   inputs: VideoRequest;
@@ -81,21 +82,41 @@ export function PickVideo({inputs, setInputs}: IPickVideoProps) {
     [inputs?.videoPath],
   );
 
+  const handleGetDuration = (duration: number) => {
+    setInputs(prev => ({...prev, duration}));
+  };
+
   useEffect(() => {
     if (!inputs?.videoPath) {
       video && uploadVideo(video);
     }
   }, [uploadVideo, video, inputs?.videoPath]);
 
-  return (
-    <TouchableOpacity
-      onPress={handleSelectVideo}
-      className="mb-3 flex aspect-[16/9] w-full items-center justify-center rounded-lg border border-dotted border-gray-400">
-      <View className="flex items-center">
-        <NewVideoIcon color="white" />
+  if (videoPerc === 0) {
+    return (
+      <TouchableOpacity
+        onPress={handleSelectVideo}
+        className="mb-3 flex aspect-[16/9] w-full items-center justify-center rounded-lg border border-dotted border-gray-400">
+        <View className="flex items-center">
+          <NewVideoIcon color="white" />
 
-        <Text className="mt-2 text-white">Pick a video</Text>
+          <Text className="mt-2 text-white">Pick a video</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  if (videoPerc > 0 && videoPerc < 100) {
+    return (
+      <View className="mb-3 flex aspect-[16/9] w-full items-center justify-center rounded-lg border border-dotted border-gray-400">
+        <Text className="mt-2 text-white">
+          {'Uploading: ' + videoPerc + '%'}
+        </Text>
       </View>
-    </TouchableOpacity>
+    );
+  }
+
+  return (
+    <VideoPlayer setDuration={handleGetDuration} videoUri={inputs?.videoUrl} />
   );
 }
