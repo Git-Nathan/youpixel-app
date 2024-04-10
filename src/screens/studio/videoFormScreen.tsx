@@ -1,6 +1,7 @@
 import {Button, Input} from '@rneui/themed';
 import {useState} from 'react';
 import {Text} from 'react-native';
+import {api} from '../../axios';
 import {TitleHeader} from '../../components/header/titleHeader';
 import {PickImage} from '../../components/upload/pickImage';
 import {PickVideo} from '../../components/upload/pickVideo';
@@ -27,9 +28,14 @@ export function VideoFormScreen(props: IVideoFormScreenProps) {
     status: 'pending',
   } as VideoRequest);
 
-  console.log('inputs', inputs);
-
-  const handleUpload = async () => {};
+  const handleUpload = async () => {
+    try {
+      const res = await api.video.addVideo(inputs);
+      console.log('res', res);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
 
   return (
     <>

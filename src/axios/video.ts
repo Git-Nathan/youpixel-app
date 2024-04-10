@@ -1,5 +1,5 @@
 import {axiosIntance} from '.';
-import {IVideo} from '../interface';
+import {VideoRequest} from '../interface';
 
 export class VideoApi {
   getVideos() {
@@ -49,7 +49,7 @@ export class VideoApi {
     );
   }
 
-  addVideo(video: IVideo) {
+  addVideo(video: VideoRequest) {
     return axiosIntance.post('/videos', video);
   }
 
@@ -57,7 +57,7 @@ export class VideoApi {
     return axiosIntance.patch('/videos/addview/' + id);
   }
 
-  editVideo(id: string, video: IVideo) {
+  editVideo(id: string, video: VideoRequest) {
     return axiosIntance.patch('/videos' + id, video);
   }
 

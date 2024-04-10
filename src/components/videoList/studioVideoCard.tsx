@@ -1,4 +1,4 @@
-import {NavigationContext} from '@react-navigation/native';
+import {NavigationContext, StackActions} from '@react-navigation/native';
 import moment from 'moment';
 import {useContext} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
@@ -6,12 +6,21 @@ import {IVideo} from '../../interface';
 
 export interface IStudioVideoCardProps {
   video: IVideo;
+  replace?: boolean;
 }
 
 export function StudioVideoCard(props: IStudioVideoCardProps) {
   const navigation = useContext(NavigationContext);
 
-  const handleNavigation = () => {};
+  const handleNavigation = () => {
+    if (props.replace) {
+      navigation?.dispatch(
+        StackActions.replace('video-detail', {v: props.video._id}),
+      );
+    } else {
+      navigation?.navigate('video-detail', {v: props.video._id});
+    }
+  };
 
   return (
     <TouchableOpacity

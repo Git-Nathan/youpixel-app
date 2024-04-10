@@ -3,8 +3,8 @@ import {observer} from 'mobx-react-lite';
 import VideoTimeIcon from '../assets/icons/video-time.svg';
 import VideoIcon from '../assets/icons/video.svg';
 import {MyVideoScreen} from '../screens/studio/myVideoScreen';
+import {VideoPendingScreen} from '../screens/studio/videoPendingScreen';
 import {globalStyles} from '../styles/globalStyles';
-import {VideosStack} from './videosStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -40,7 +40,7 @@ export const StudioStack = observer((props: IMainStackProps) => {
       />
       <Tab.Screen
         name="pending-videos"
-        component={VideosStack}
+        component={VideoPendingScreen}
         options={{
           tabBarLabel: 'Pending videos',
           tabBarIcon: ({focused}) => {

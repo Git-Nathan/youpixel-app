@@ -38,7 +38,6 @@ function App(): React.JSX.Element {
             <Stack.Screen name="watch" component={WatchScreen} />
             <Stack.Screen name="studio" component={StudioStack} />
             <Stack.Screen name="video-form" component={VideoFormScreen} />
-            <Stack.Screen name="video-detail" component={StudioStack} />
           </Stack.Navigator>
         </NavigationContainer>
       </AuthProvider>
