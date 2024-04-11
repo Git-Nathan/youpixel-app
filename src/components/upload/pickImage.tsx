@@ -1,5 +1,5 @@
 import {getDownloadURL, ref, uploadBytesResumable} from 'firebase/storage';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
 import NewImageIcon from '../../assets/icons/add-image.svg';
@@ -10,12 +10,20 @@ import {storage} from '../../utils/firebase';
 export interface IPickImageProps {
   inputs: VideoRequest;
   setInputs: React.Dispatch<React.SetStateAction<VideoRequest>>;
+  img: SelectedFile | undefined;
+  setImg: React.Dispatch<React.SetStateAction<SelectedFile | undefined>>;
+  imgPerc: number;
+  setImgPerc: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export function PickImage({inputs, setInputs}: IPickImageProps) {
-  const [img, setImg] = useState<SelectedFile | undefined>(undefined);
-  const [imgPerc, setImgPerc] = useState(0);
-
+export function PickImage({
+  inputs,
+  setInputs,
+  img,
+  imgPerc,
+  setImg,
+  setImgPerc,
+}: IPickImageProps) {
   const handleSelectThumbnail = async () => {
     try {
       const doc = await DocumentPicker.pick({

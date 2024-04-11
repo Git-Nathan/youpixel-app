@@ -15,10 +15,10 @@ export function StudioVideoCard(props: IStudioVideoCardProps) {
   const handleNavigation = () => {
     if (props.replace) {
       navigation?.dispatch(
-        StackActions.replace('video-detail', {v: props.video._id}),
+        StackActions.replace('video-form', {v: props.video._id}),
       );
     } else {
-      navigation?.navigate('video-detail', {v: props.video._id});
+      navigation?.navigate('video-form', {v: props.video._id});
     }
   };
 

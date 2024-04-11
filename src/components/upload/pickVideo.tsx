@@ -1,5 +1,5 @@
 import {getDownloadURL, ref, uploadBytesResumable} from 'firebase/storage';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
 import NewVideoIcon from '../../assets/icons/video-add.svg';
@@ -11,12 +11,20 @@ import {VideoPlayer} from '../watch/videoPlayer';
 export interface IPickVideoProps {
   inputs: VideoRequest;
   setInputs: React.Dispatch<React.SetStateAction<VideoRequest>>;
+  video: SelectedFile | undefined;
+  setVideo: React.Dispatch<React.SetStateAction<SelectedFile | undefined>>;
+  videoPerc: number;
+  setVideoPerc: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export function PickVideo({inputs, setInputs}: IPickVideoProps) {
-  const [video, setVideo] = useState<SelectedFile | undefined>(undefined);
-  const [videoPerc, setVideoPerc] = useState(0);
-
+export function PickVideo({
+  inputs,
+  setInputs,
+  setVideo,
+  setVideoPerc,
+  video,
+  videoPerc,
+}: IPickVideoProps) {
   const handleSelectVideo = async () => {
     try {
       const doc = await DocumentPicker.pick({

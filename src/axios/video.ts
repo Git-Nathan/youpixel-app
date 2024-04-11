@@ -58,7 +58,7 @@ export class VideoApi {
   }
 
   editVideo(id: string, video: VideoRequest) {
-    return axiosIntance.patch('/videos' + id, video);
+    return axiosIntance.patch('/videos/' + id, video);
   }
 
   deleteVideo(id: string) {
