@@ -5,6 +5,7 @@ import {useContext, useState} from 'react';
 import {Image, View} from 'react-native';
 import SearchIcon from '../../assets/icons/search.svg';
 import VideoIcon from '../../assets/icons/video.svg';
+import {accountStoreIntance} from '../../auth/authProvider';
 import {SearchBar} from './searchBar';
 
 export interface IHeaderProps {}
@@ -12,6 +13,7 @@ export interface IHeaderProps {}
 export const Header = observer(({}: IHeaderProps) => {
   // Search bar
   const [openSearchBar, setOpenSearchBar] = useState(false);
+  const [accountStore] = useState(() => accountStoreIntance);
 
   const handleOpenSearchBar = () => {
     setOpenSearchBar(true);
@@ -25,6 +27,10 @@ export const Header = observer(({}: IHeaderProps) => {
 
   const handleGoToVMyVideos = () => {
     navigation?.navigate('studio');
+  };
+
+  const handleGoToAccount = () => {
+    navigation?.navigate('account');
   };
 
   if (openSearchBar) {
@@ -51,7 +57,9 @@ export const Header = observer(({}: IHeaderProps) => {
             width: 40,
             height: 40,
           }}
-          onPress={handleGoToVMyVideos}>
+          onPress={
+            accountStore.isSignedIn ? handleGoToVMyVideos : handleGoToAccount
+          }>
           <VideoIcon color={'white'} />
         </Button>
         <Button
