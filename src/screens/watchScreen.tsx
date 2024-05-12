@@ -1,19 +1,19 @@
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { Skeleton } from '@rneui/base';
-import { observer } from 'mobx-react-lite';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {Skeleton} from '@rneui/base';
+import {observer} from 'mobx-react-lite';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { api } from '../axios';
-import { VideoCardSkeleton } from '../components/skeleton/videoCardSkeleton';
-import { VideoCard } from '../components/videoList/videoCard';
-import { Channel } from '../components/watch/channel';
-import { Like } from '../components/watch/like';
-import { PreviewComment } from '../components/watch/previewComment';
-import { VideoPlayer } from '../components/watch/videoPlayer';
-import { WatchStore } from '../stores/watch';
-import { Params } from '../types';
+import {useEffect, useState} from 'react';
+import {ScrollView, Text, View} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {api} from '../axios';
+import {VideoCardSkeleton} from '../components/skeleton/videoCardSkeleton';
+import {VideoCard} from '../components/videoList/videoCard';
+import {Channel} from '../components/watch/channel';
+import {Like} from '../components/watch/like';
+import {PreviewComment} from '../components/watch/previewComment';
+import {VideoPlayer} from '../components/watch/videoPlayer';
+import {WatchStore} from '../stores/watch';
+import {Params} from '../types';
 
 export const watchStoreIntance = new WatchStore();
 
@@ -98,18 +98,6 @@ export const WatchScreen = observer(() => {
 
           <View className="mt-3 flex flex-row items-center space-x-3">
             <Like videoId={videoId} />
-            {/* <View
-              className="flex flex-row rounded-full"
-              style={{
-                backgroundColor: '#1e232e',
-              }}>
-              <TouchableOpacity
-                className="flex h-8 flex-row items-center px-3"
-                onPress={handleShare}>
-                <ShareIcon color="white" width={18} height={18} />
-                <Text className="ml-2 text-white">Share</Text>
-              </TouchableOpacity>
-            </View> */}
           </View>
 
           <PreviewComment videoId={videoId} />

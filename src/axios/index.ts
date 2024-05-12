@@ -12,7 +12,7 @@ export const axiosIntance = axios.create({
   baseURL: 'https://youpixel-api.onrender.com/',
 });
 // export const axiosIntance = axios.create({
-//   baseURL: 'http://192.168.1.182:5002/',
+//   baseURL: 'http://192.168.81.108:5002/',
 // });
 
 axiosIntance.interceptors.request.use(async req => {

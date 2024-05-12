@@ -4,11 +4,20 @@ import {Dialog} from '@rneui/themed';
 import {observer} from 'mobx-react-lite';
 import moment from 'moment';
 import {useContext, useEffect, useState} from 'react';
-import {Image, ScrollView, Text, TextInput, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {
+  Image,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Popover from 'react-native-popover-view/dist/Popover';
+import MoreIcon from '../../assets/icons/more.svg';
 import {accountStoreIntance} from '../../auth/authProvider';
 import {api} from '../../axios';
 import {watchStoreIntance} from '../../screens/watchScreen';
+import {AppDialog} from '../common/appDialog';
 
 export interface IPreviewComment {
   videoId: string;
@@ -56,6 +65,15 @@ export const PreviewComment = observer((props: IPreviewComment) => {
     );
   }
 
+  const handleDelete = async (id: string) => {
+    try {
+      await api.comment.deleteComment(id);
+      watchStore.getComment(props.videoId, 1);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
   return (
     <>
       <TouchableOpacity
@@ -94,25 +112,54 @@ export const PreviewComment = observer((props: IPreviewComment) => {
         }}>
         <Dialog.Title titleStyle={{color: 'white'}} title="Comments" />
         <ScrollView className="max-h-[90%]">
-          <View className="flex space-y-5">
+          <View className="flex w-full space-y-5">
             {watchStore.comment?.data?.map(item => (
-              <View className="flex flex-row">
-                <Image
-                  className="mr-3 mt-1 h-6 w-6 flex-shrink-0 rounded-full"
-                  source={{
-                    uri: item?.userInfo?.picture || '',
-                  }}
-                />
-                <View className="flex flex-col">
-                  <Text
-                    numberOfLines={1}
-                    className="flex-grow text-sm text-gray-400">
-                    {item?.userInfo.name} - {moment(item.createdAt).fromNow()}
-                  </Text>
-                  <Text className="flex-grow text-sm text-white">
-                    {item?.desc}
-                  </Text>
+              <View className="flex w-full max-w-full flex-row justify-between">
+                <View className="flex flex-row">
+                  <Image
+                    className="mr-3 mt-1 h-6 w-6 flex-shrink-0 rounded-full"
+                    source={{
+                      uri: item?.userInfo?.picture || '',
+                    }}
+                  />
+                  <View className="flex flex-col">
+                    <Text
+                      numberOfLines={1}
+                      className="flex-grow text-sm text-gray-400">
+                      {item?.userInfo.name} - {moment(item.createdAt).fromNow()}
+                    </Text>
+                    <Text className="flex-grow text-sm text-white">
+                      {item?.desc}
+                    </Text>
+                  </View>
                 </View>
+                {accountStore?.currentUser?._id === item?.userInfo?._id && (
+                  <Popover
+                    from={
+                      <TouchableOpacity className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
+                        <MoreIcon color="white" width={20} height={20} />
+                      </TouchableOpacity>
+                    }>
+                    <AppDialog
+                      onConfirm={() => {
+                        handleDelete(item._id);
+                      }}
+                      title="Confirm Delete"
+                      content={
+                        <Text>
+                          Are you sure you want to delete this comment?
+                        </Text>
+                      }>
+                      {handleToggle => (
+                        <TouchableOpacity
+                          className="px-3 py-2"
+                          onPress={handleToggle}>
+                          <Text className="text-[#000000]">Delete</Text>
+                        </TouchableOpacity>
+                      )}
+                    </AppDialog>
+                  </Popover>
+                )}
               </View>
             ))}
           </View>

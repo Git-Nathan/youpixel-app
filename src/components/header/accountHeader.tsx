@@ -1,28 +1,10 @@
-import clsx from 'clsx';
 import {observer} from 'mobx-react-lite';
 import {useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import SettingIcon from '../../assets/icons/setting.svg';
 import {accountStoreIntance} from '../../auth/authProvider';
 import {signOut} from '../../utils/googleSignin';
-
-const MenuButton = ({
-  title,
-  onPress,
-  className,
-}: {
-  title: string;
-  onPress: () => void;
-  className?: string;
-}) => {
-  return (
-    <TouchableOpacity
-      className={clsx('flex items-center justify-center py-2', className)}
-      onPress={onPress}>
-      <Text className="text-lg text-white">{title}</Text>
-    </TouchableOpacity>
-  );
-};
+import MenuButton from '../button/MenuButton';
 
 export const AccountHeader = observer(() => {
   const [openMenu, setOpenMenu] = useState(false);
