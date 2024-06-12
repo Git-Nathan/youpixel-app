@@ -7,6 +7,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {AuthProvider} from './src/auth/authProvider';
 import {VideoFormScreen} from './src/screens/studio/videoFormScreen';
 import {WatchScreen} from './src/screens/watchScreen';
+import {BlockScreen} from './src/stacks/blockStack';
 import {MainStack} from './src/stacks/mainStack';
 import {StudioStack} from './src/stacks/studioStack';
 import {globalStyles} from './src/styles/globalStyles';
@@ -38,6 +39,7 @@ function App(): React.JSX.Element {
             <Stack.Screen name="watch" component={WatchScreen} />
             <Stack.Screen name="studio" component={StudioStack} />
             <Stack.Screen name="video-form" component={VideoFormScreen} />
+            <Stack.Screen name="block" component={BlockScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </AuthProvider>

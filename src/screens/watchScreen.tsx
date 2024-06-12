@@ -25,8 +25,6 @@ export const WatchScreen = observer(() => {
 
   const handleShowDesc = () => {};
 
-  const handleShare = () => {};
-
   useEffect(() => {
     watchStore.getDetail(videoId);
     watchStore.getVideoList();

@@ -1,5 +1,6 @@
 import {GoogleSigninButton} from '@react-native-google-signin/google-signin';
-import {useState} from 'react';
+import {NavigationContext} from '@react-navigation/native';
+import {useContext, useState} from 'react';
 import {View} from 'react-native';
 import {accountStoreIntance} from '../../auth/authProvider';
 import {isSignedIn, signIn, signOut} from '../../utils/googleSignin';
@@ -8,6 +9,7 @@ export interface ISigninScreenProps {}
 
 export function SigninScreen(props: ISigninScreenProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const navigation = useContext(NavigationContext);
 
   const handleSignin = async () => {
     setIsLoading(true);
@@ -15,7 +17,10 @@ export function SigninScreen(props: ISigninScreenProps) {
     if (signedIn) {
       signOut();
     } else {
-      await signIn();
+      const status = await signIn();
+      if (!status) {
+        navigation?.navigate('block');
+      }
     }
     accountStoreIntance.getUserFromStorage();
     setIsLoading(false);

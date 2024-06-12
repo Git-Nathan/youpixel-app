@@ -8,12 +8,12 @@ import {UserApi} from './user';
 import {VideoApi} from './video';
 import {WatchedApi} from './watched';
 
-export const axiosIntance = axios.create({
-  baseURL: 'https://youpixel-api.onrender.com/',
-});
 // export const axiosIntance = axios.create({
-//   baseURL: 'http://192.168.81.108:5002/',
+//   baseURL: 'https://youpixel-api.onrender.com/',
 // });
+export const axiosIntance = axios.create({
+  baseURL: 'http://192.168.81.108:5002/',
+});
 
 axiosIntance.interceptors.request.use(async req => {
   const value = await AsyncStorage.getItem('token');
